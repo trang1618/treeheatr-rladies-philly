@@ -1,0 +1,46 @@
+---
+title: "treeheatr demo"
+output: html_document
+---
+
+```{r setup}
+library(treeheatr)
+set.seed(1618)
+```
+
+## Prepare datasets:
+```{r}
+load('cotm.Rdata')
+
+n_obs <- nrow(df)
+train_idx <- sample.int(n_obs, floor(n_obs*0.8), FALSE)
+train_df <- df[train_idx, ]
+test_df <- df[-train_idx, ]
+```
+
+## Apply default conditional tree and plot results:
+```{r}
+treeheatr(x = train_df, 
+          target_lab = 'cotm', 
+          data_test = test_df)
+```
+
+## But the branches cross!!!
+
+```{r}
+treeheatr(x = train_df, 
+          target_lab = 'cotm',
+          data_test = test_df,
+          lev_fac = 2)
+```
+
+But the target color is ugly!
+
+```{r}
+treeheatr(x = train_df, 
+          target_lab = 'cotm',
+          data_test = test_df,
+          lev_fac = 2,
+          target_cols = c('blue', 'red'))
+```
+
